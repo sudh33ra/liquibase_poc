@@ -4,10 +4,10 @@ WORKSPACE=$1
 SCHEMA_NAME=$2
 
 export JENKINS_HOME=/jenkins/
-export lquser=`aws secretsmanager get-secret-value --secret-id stageAppDBRDS --region us-east-1   | jq --raw-output .SecretString | jq -r ."username"`
-export lqpassword=`aws secretsmanager get-secret-value --secret-id stageAppDBRDS --region us-east-1   | jq --raw-output .SecretString | jq -r ."password"`
-export hostname=`aws secretsmanager get-secret-value --secret-id stageAppDBRDS --region us-east-1   | jq --raw-output .SecretString | jq -r ."host"`
-export portnumber=`aws secretsmanager get-secret-value --secret-id stageAppDBRDS --region us-east-1   | jq --raw-output .SecretString | jq -r ."port"`
+export lquser=`aws secretsmanager get-secret-value --secret-id username --region us-east-1   | jq --raw-output .SecretString | jq -r ."username"`
+export lqpassword=`aws secretsmanager get-secret-value --secret-id password --region us-east-1   | jq --raw-output .SecretString | jq -r ."password"`
+export hostname=`aws secretsmanager get-secret-value --secret-id hostname --region us-east-1   | jq --raw-output .SecretString | jq -r ."host"`
+export portnumber=`aws secretsmanager get-secret-value --secret-id portnumber --region us-east-1   | jq --raw-output .SecretString | jq -r ."port"`
 
 docker run -v $WORKSPACE:$WORKSPACE -v $JENKINS_HOME:$JENKINS_HOME liquibase/liquibase:4.27 \
 --url=jdbc:mysql://$hostname:$portnumber/$SCHEMA_NAME \
